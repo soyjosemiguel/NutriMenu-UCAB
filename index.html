@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NutriMenu UCAB</title>
+
+  <style>
+    :root{
+      --navy: #0b1f2a;
+      --green: #2e7d32;
+      --green-light: #7cb342;
+      --teal: #1aa6a8;
+      --gold: #f2b233;
+      --bg: #f3f7f6;
+      --card: #ffffff;
+      --muted: #5b6b73;
+    }
+
+    *{ box-sizing: border-box; }
+
+    body{
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: #0f172a;
+    }
+
+    /* HEADER  */
+    .topbar{
+      background: linear-gradient(90deg, var(--navy), var(--green));
+      padding: 14px 18px;
+      color: white;
+    }
+
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo{
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: white;
+      padding: 6px;
+      object-fit: contain;
+    }
+
+    .brand-text h2{
+      margin: 0;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .brand-text span{
+      font-weight: normal;
+      opacity: .9;
+    }
+
+    .brand-text p{
+      margin: 4px 0 0;
+      font-size: 13px;
+      opacity: .9;
+    }
+
+    /* LAYOUT  */
+    main{
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 18px;
+      padding: 18px;
+    }
+
+    .card{
+      background: var(--card);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    }
+
+    /* CONTROLES */
+    h3, h4{ margin-top: 0; }
+
+    label{
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    select{
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      margin-top: 6px;
+    }
+
+    .row{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      align-items: center;
+    }
+
+    .btn{
+      flex: 1;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 600;
+      background: var(--teal);
+      color: white;
+    }
+
+    .btn.secondary{ background: var(--navy); }
+    .btn.danger{ background: #d32f2f; }
+
+    .btn:active{ transform: scale(.97); }
+
+    /* ESTADO DEL RELOJ */
+    .scheduler-pill{
+      flex: 0 0 auto;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: bold;
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    /*  NOTIFICACIONES  */
+    .header-notif{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .muted{
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .notif{
+      background: #f8fafc;
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-left: 7px solid #94a3b8;
+    }
+
+    .notif .meta{
+      font-size: 12px;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tag{
+      background: #e2e8f0;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 11px;
+      margin-right: 6px;
+    }
+
+    .AUDITORIA{ border-left-color: var(--green); }
+    .EVENTO{ border-left-color: var(--teal); }
+    .ALERTA{ border-left-color: var(--gold); }
+    .PROMO{ border-left-color: #ef4444; }
+    .ASYNC{ border-left-color: #10b981; }
+
+    /*  RESPONSIVE */
+    @media(max-width: 900px){
+      main{
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--  HEADER -->
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo-nutrimenu.jpeg" alt="NutriMenu UCAB" class="brand-logo">
+      <div class="brand-text">
+        <h2>NutriMenu <span>UCAB</span></h2>
+      </div>
+    </div>
+  </header>
+
+  <!--  CONTENIDO -->
+  <main>
+
+    <!-- CONTROLES -->
+    <section class="card">
+      <h3>Controles</h3>
+
+      <label>Selecciona un plato</label>
+      <select id="menuSelect"></select>
+
+      <div class="row">
+        <button class="btn" id="btnPublicar">Publicar menú (POA)</button>
+        <button class="btn secondary" id="btnVerificar">Verificar mesas (PA)</button>
+      </div>
+
+      <hr style="margin:16px 0; border:none; border-top:1px solid #e2e8f0;">
+
+      <h4>Eventos (POE)</h4>
+      <div class="row">
+        <button class="btn" id="btnAlmuerzo">Disparar Almuerzo 12:00</button>
+        <button class="btn" id="btnCierre">Disparar Cierre 4:00</button>
+        <button class="btn danger" id="btnStockBajo">Simular stock bajo</button>
+      </div>
+
+      <hr style="margin:16px 0; border:none; border-top:1px solid #e2e8f0;">
+
+      <!-- RELOJ  -->
+      <div class="row">
+        <span id="schedulerState" class="scheduler-pill">OFF</span>
+        <button class="btn secondary" id="btnToggleScheduler">Encender reloj</button>
+        <button class="btn secondary" id="btnLimpiar">Limpiar panel</button>
+      </div>
+    </section>
+
+    <!-- NOTIFICACIONES -->
+    <section class="card">
+      <div class="header-notif">
+        <h3>Notificaciones</h3>
+        <span id="contador" class="muted">0</span>
+      </div>
+
+      <p class="muted">
+        Aquí se publica auditoría (POA), eventos/alertas (POE) y verificación asíncrona (PA).
+      </p>
+
+      <div id="notificaciones"></div>
+    </section>
+
+  </main>
+
+  <!-- JS -->
+  <script src="app.js"></script>
+
+</body>
+</html>
